@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import url from 'url';
 import yaml from 'js-yaml';
-import { OpenAI } from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
@@ -53,18 +53,25 @@ function buildPrompt(structure, docs) {
   return `You are an expert frontend architect. Given the components folder structure and docs, propose an improved organization (groupings like UI, data-display, feedback, navigation), and suggest safe renames/moves. Output a concise YAML with keys: moves (list of {from, to}), notes (short bullets), and toc_sections (map of section -> sorted list of component folder names). Only include safe, mechanical moves (no content edits).\n\nCurrent structure:\n${structure.map((e) => `- ${e.type}: ${e.path}`).join('\n')}\n\nComponent docs excerpts:\n${Object.entries(docs).map(([k, v]) => `### ${k}\n${v}`).join('\n\n')}`;
 }
 
-async function callOpenAI(prompt) {
-  const apiKey = ensureEnv('OPENAI_API_KEY');
-  const client = new OpenAI({ apiKey });
-  const res = await client.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      { role: 'system', content: 'You output only valid YAML. No prose.' },
-      { role: 'user', content: prompt }
+async function callGemini(prompt) {
+  const apiKey = ensureEnv('GOOGLE_API_KEY');
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const result = await model.generateContent({
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          { text: 'You output only valid YAML. No prose.' },
+          { text: prompt },
+        ],
+      },
     ],
-    temperature: 0.2,
+    generationConfig: {
+      temperature: 0.2,
+    },
   });
-  const content = res.choices?.[0]?.message?.content || '';
+  const content = result.response?.text?.() || '';
   return content.trim();
 }
 
@@ -119,7 +126,7 @@ async function writeComponentsReadme(tocSections) {
     }
   }
 
-  lines.push('', '---', '', 'To update this table of contents automatically, run:', '', '```bash', 'npm run update:toc', '```', '', 'To AI-organize components and update the table of contents (requires `OPENAI_API_KEY`):', '', '```bash', 'npm run organize:components', '```', '');
+  lines.push('', '---', '', 'To update this table of contents automatically, run:', '', '```bash', 'npm run update:toc', '```', '', 'To AI-organize components and update the table of contents (requires `GOOGLE_API_KEY`):', '', '```bash', 'npm run organize:components', '```', '');
 
   await fs.writeFile(path.join(componentsDir, 'README.md'), lines.join('\n'), 'utf8');
 }
@@ -128,7 +135,7 @@ async function main() {
   const structure = await listStructure(componentsDir);
   const docs = await readComponentDocs();
   const prompt = buildPrompt(structure, docs);
-  const yamlText = await callOpenAI(prompt);
+  const yamlText = await callGemini(prompt);
   const { moves = [], toc_sections: tocSections = {} } = parseYaml(yamlText);
   await applyMoves(moves);
   await writeComponentsReadme(tocSections);
