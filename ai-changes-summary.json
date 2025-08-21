@@ -1,0 +1,71 @@
+{
+  "timestamp": "2025-08-21T15:29:34.706Z",
+  "changes": {
+    "moves": [
+      {
+        "from": "components/Button",
+        "to": "components/Feedback/Button",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Button' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Feedback/Button'"
+      },
+      {
+        "from": "components/Pagination",
+        "to": "components/DataDisplay/Pagination",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Pagination' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/DataDisplay/Pagination'"
+      },
+      {
+        "from": "components/Modal",
+        "to": "components/Feedback/Modal",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Modal' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Feedback/Modal'"
+      },
+      {
+        "from": "components/Navbar",
+        "to": "components/Navigation/Navbar",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navbar' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navigation/Navbar'"
+      },
+      {
+        "from": "components/Dropdown",
+        "to": "components/Navigation/Dropdown",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Dropdown' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navigation/Dropdown'"
+      },
+      {
+        "from": "components/Input",
+        "to": "components/DataDisplay/Input",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Input' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/DataDisplay/Input'"
+      },
+      {
+        "from": "components/Table",
+        "to": "components/DataDisplay/Table",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Table' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/DataDisplay/Table'"
+      }
+    ],
+    "toc_sections": {
+      "UI": [
+        "components/UI/Icon"
+      ],
+      "DataDisplay": [
+        "components/DataDisplay/Input",
+        "components/DataDisplay/Table",
+        "components/DataDisplay/Pagination"
+      ],
+      "Feedback": [
+        "components/Feedback/Button",
+        "components/Feedback/Modal"
+      ],
+      "Navigation": [
+        "components/Navigation/Navbar",
+        "components/Navigation/Dropdown"
+      ]
+    },
+    "notes": [
+      "All moves are simple directory renames and moves. No file content changes are proposed.",
+      "Structure promotes better discoverability based on component functionality."
+    ]
+  }
+}
