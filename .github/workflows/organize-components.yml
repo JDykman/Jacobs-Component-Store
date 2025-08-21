@@ -14,6 +14,10 @@ permissions:
 jobs:
   organize:
     runs-on: ubuntu-latest
+    outputs:
+      changes_made: ${{ steps.organize.outputs.changes_made }}
+      summary_path: ${{ steps.organize.outputs.summary_path }}
+      markdown_path: ${{ steps.organize.outputs.markdown_path }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,12 +35,33 @@ jobs:
         run: npm run update:toc
 
       - name: AI Organize and Update TOC
+        id: organize
         env:
           GOOGLE_API_KEY: ${{ secrets.GEMIKEY }}
         run: npm run organize:components
 
       - name: Update TOC (post)
         run: npm run update:toc
+
+      - name: Upload change summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-changes-summary
+          path: |
+            ai-changes-summary.json
+            AI_CHANGES_SUMMARY.md
+          retention-days: 30
+
+      - name: Generate commit message
+        id: commit-msg
+        run: |
+          if [ "${{ steps.organize.outputs.changes_made }}" = "true" ]; then
+            echo "message=chore(components): AI organize and update TOC" >> $GITHUB_OUTPUT
+            echo "body=AI workflow completed successfully with component reorganization." >> $GITHUB_OUTPUT
+          else
+            echo "message=chore(components): Update TOC only" >> $GITHUB_OUTPUT
+            echo "body=No component moves were made. Only TOC was updated." >> $GITHUB_OUTPUT
+          fi
 
       - name: Commit and push changes
         env:
@@ -46,8 +71,34 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "chore(components): AI organize and update TOC"
+            git commit -m "${{ steps.commit-msg.outputs.message }}" -m "${{ steps.commit-msg.outputs.body }}"
             git push
           else
             echo "No changes to commit."
           fi
+
+      - name: Comment on commit
+        if: steps.organize.outputs.changes_made == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let summaryContent = '';
+            try {
+              summaryContent = fs.readFileSync('AI_CHANGES_SUMMARY.md', 'utf8');
+            } catch (e) {
+              summaryContent = 'Change summary could not be read.';
+            }
+            
+            const comment = `🤖 **AI Component Organization Complete**
+            
+            ${summaryContent}
+            
+            📋 **Artifacts**: Download the \`ai-changes-summary\` artifact to see detailed changes.`;
+            
+            github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: comment
+            });

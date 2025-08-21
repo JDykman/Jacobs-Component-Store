@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "update:toc": "node scripts/update-toc.mjs",
-    "organize:components": "node scripts/organize-components.mjs"
+    "organize:components": "node scripts/organize-components.mjs",
+    "test:summary": "node scripts/generate-change-summary.mjs"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
