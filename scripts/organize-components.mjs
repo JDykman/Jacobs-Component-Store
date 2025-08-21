@@ -62,7 +62,7 @@ async function callGemini(prompt) {
       {
         role: 'user',
         parts: [
-          { text: 'You output only valid YAML. No prose.' },
+          { text: 'You output only valid YAML. No prose, no markdown formatting, no code blocks.' },
           { text: prompt },
         ],
       },
@@ -72,7 +72,22 @@ async function callGemini(prompt) {
     },
   });
   const content = result.response?.text?.() || '';
-  return content.trim();
+  
+  // Clean up the response to extract just YAML content
+  let cleanedContent = content.trim();
+  
+  // Remove markdown code block markers if present
+  if (cleanedContent.startsWith('```yaml')) {
+    cleanedContent = cleanedContent.replace(/^```yaml\s*/, '');
+  }
+  if (cleanedContent.startsWith('```')) {
+    cleanedContent = cleanedContent.replace(/^```\s*/, '');
+  }
+  if (cleanedContent.endsWith('```')) {
+    cleanedContent = cleanedContent.replace(/\s*```$/, '');
+  }
+  
+  return cleanedContent;
 }
 
 function parseYaml(yamlText) {
@@ -80,6 +95,10 @@ function parseYaml(yamlText) {
     return yaml.load(yamlText) || {};
   } catch (e) {
     console.error('Failed to parse YAML from AI:', e.message);
+    console.error('Raw YAML content received:');
+    console.error('---');
+    console.error(yamlText);
+    console.error('---');
     process.exit(1);
   }
 }
