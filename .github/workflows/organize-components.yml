@@ -32,7 +32,7 @@ jobs:
 
       - name: AI Organize and Update TOC
         env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GEMIKEY }}
         run: npm run organize:components
 
       - name: Update TOC (post)
