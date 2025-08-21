@@ -1,0 +1,14 @@
+{
+  "name": "jacobs-component-store",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "update:toc": "node scripts/update-toc.mjs",
+    "organize:components": "node scripts/organize-components.mjs"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "openai": "^4.52.0"
+  }
+}
