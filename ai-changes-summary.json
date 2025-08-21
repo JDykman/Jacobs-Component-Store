@@ -1,78 +1,84 @@
 {
-  "timestamp": "2025-08-21T15:32:30.547Z",
+  "timestamp": "2025-08-21T15:39:41.137Z",
   "changes": {
     "moves": [
       {
         "from": "components/Button",
-        "to": "components/Feedback/Button",
+        "to": "components/feedback/Button",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Button' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Feedback/Button'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Button' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/feedback/Button'"
       },
       {
         "from": "components/Pagination",
-        "to": "components/DataDisplay/Pagination",
+        "to": "components/data-display/Pagination",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Pagination' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/DataDisplay/Pagination'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Pagination' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/data-display/Pagination'"
       },
       {
         "from": "components/Modal",
-        "to": "components/Feedback/Modal",
+        "to": "components/feedback/Modal",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Modal' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Feedback/Modal'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Modal' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/feedback/Modal'"
       },
       {
         "from": "components/Navbar",
-        "to": "components/Navigation/Navbar",
+        "to": "components/navigation/Navbar",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navbar' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navigation/Navbar'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navbar' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/navigation/Navbar'"
       },
       {
         "from": "components/Dropdown",
-        "to": "components/Navigation/Dropdown",
+        "to": "components/data-display/Dropdown",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Dropdown' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navigation/Dropdown'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Dropdown' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/data-display/Dropdown'"
       },
       {
         "from": "components/ProgressIndicator",
-        "to": "components/Feedback/ProgressIndicator",
+        "to": "components/feedback/ProgressIndicator",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/ProgressIndicator' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Feedback/ProgressIndicator'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/ProgressIndicator' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/feedback/ProgressIndicator'"
       },
       {
-        "from": "components/Input",
-        "to": "components/DataDisplay/Input",
+        "from": "components/Tabs",
+        "to": "components/data-display/Tabs",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Input' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/DataDisplay/Input'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Tabs' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/data-display/Tabs'"
       },
       {
-        "from": "components/Table",
-        "to": "components/DataDisplay/Table",
+        "from": "components/Tooltip",
+        "to": "components/feedback/Tooltip",
         "status": "failed",
-        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Table' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/DataDisplay/Table'"
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Tooltip' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/feedback/Tooltip'"
+      },
+      {
+        "from": "components/Sidebar",
+        "to": "components/navigation/Sidebar",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Sidebar' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/navigation/Sidebar'"
       }
     ],
     "toc_sections": {
       "UI": [
-        "components/UI/Icon"
+        "Input",
+        "Checkbox",
+        "Radio"
       ],
-      "DataDisplay": [
-        "components/DataDisplay/Input",
-        "components/DataDisplay/Table",
-        "components/DataDisplay/Pagination"
+      "data-display": [
+        "Dropdown",
+        "Pagination",
+        "Tabs"
       ],
-      "Feedback": [
-        "components/Feedback/Button",
-        "components/Feedback/Modal",
-        "components/Feedback/ProgressIndicator"
+      "feedback": [
+        "Button",
+        "Modal",
+        "ProgressIndicator",
+        "Tooltip"
       ],
-      "Navigation": [
-        "components/Navigation/Navbar",
-        "components/Navigation/Dropdown"
+      "navigation": [
+        "Navbar",
+        "Sidebar"
       ]
     },
-    "notes": [
-      "All moves are simple renames and directory moves. No code changes are needed.",
-      "Consider adding more detailed component documentation within each subfolder."
-    ]
+    "notes": "This reorganization groups components by their primary function, improving discoverability and maintainability.  The categories used are UI, data-display, feedback, and navigation.  This approach promotes a more intuitive structure for developers.\n\nArchitectural Recommendations:\n* Consider using a design system to enforce consistency across components.\n* Implement a robust testing strategy for all components.\n* Utilize a component library for common UI elements to reduce development time.\n\nNaming Conventions:\n* Use PascalCase for component names (e.g., MyComponent).\n* Ensure names are descriptive and self-explanatory.\n* Maintain consistency in naming across all components.\n\nMaintainability Improvements:\n* Regularly review and refactor components to ensure they remain efficient and well-structured.\n* Implement a linting tool to enforce coding standards.\n* Use version control to track changes and collaborate effectively.\n\nGrouping Rationale:\n* UI: General purpose components that don't fit neatly into other categories.\n* Data-display: Components for presenting data to the user (tables, lists, etc.).\n* Feedback: Components that provide feedback to the user (buttons, modals, progress indicators).\n* Navigation: Components that aid in navigation within the application (navbar, sidebar).\n\nFuture Considerations:\n* Explore adding a 'forms' category for form-related components.\n* Consider creating a dedicated category for layout components.\n* Implement a system for managing component dependencies.\n"
   }
 }
