@@ -237,9 +237,16 @@ async function main() {
   
   // Output summary for GitHub Actions
   if (process.env.GITHUB_ACTIONS) {
-    console.log('::set-output name=changes_made::' + (appliedMoves.length > 0 ? 'true' : 'false'));
-    console.log('::set-output name=summary_path::' + summaryPath);
-    console.log('::set-output name=markdown_path::' + markdownPath);
+    const githubOutput = process.env.GITHUB_OUTPUT;
+    if (githubOutput) {
+      const fs = await import('fs');
+      const output = [
+        `changes_made=${appliedMoves.length > 0 ? 'true' : 'false'}`,
+        `summary_path=${summaryPath}`,
+        `markdown_path=${markdownPath}`
+      ].join('\n');
+      fs.writeFileSync(githubOutput, output, 'utf8');
+    }
   }
 }
 
