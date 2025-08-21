@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-21T15:29:34.706Z",
+  "timestamp": "2025-08-21T15:32:30.547Z",
   "changes": {
     "moves": [
       {
@@ -33,6 +33,12 @@
         "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Dropdown' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Navigation/Dropdown'"
       },
       {
+        "from": "components/ProgressIndicator",
+        "to": "components/Feedback/ProgressIndicator",
+        "status": "failed",
+        "error": "ENOENT: no such file or directory, rename '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/ProgressIndicator' -> '/home/runner/work/Jacobs-Component-Store/Jacobs-Component-Store/components/Feedback/ProgressIndicator'"
+      },
+      {
         "from": "components/Input",
         "to": "components/DataDisplay/Input",
         "status": "failed",
@@ -56,7 +62,8 @@
       ],
       "Feedback": [
         "components/Feedback/Button",
-        "components/Feedback/Modal"
+        "components/Feedback/Modal",
+        "components/Feedback/ProgressIndicator"
       ],
       "Navigation": [
         "components/Navigation/Navbar",
@@ -64,8 +71,8 @@
       ]
     },
     "notes": [
-      "All moves are simple directory renames and moves. No file content changes are proposed.",
-      "Structure promotes better discoverability based on component functionality."
+      "All moves are simple renames and directory moves. No code changes are needed.",
+      "Consider adding more detailed component documentation within each subfolder."
     ]
   }
 }
