@@ -50,7 +50,25 @@ async function readComponentDocs() {
 }
 
 function buildPrompt(structure, docs) {
-  return `You are an expert frontend architect. Given the components folder structure and docs, propose an improved organization (groupings like UI, data-display, feedback, navigation), and suggest safe renames/moves. Output a concise YAML with keys: moves (list of {from, to}), notes (short bullets), and toc_sections (map of section -> sorted list of component folder names). Only include safe, mechanical moves (no content edits).\n\nCurrent structure:\n${structure.map((e) => `- ${e.type}: ${e.path}`).join('\n')}\n\nComponent docs excerpts:\n${Object.entries(docs).map(([k, v]) => `### ${k}\n${v}`).join('\n\n')}`;
+  return `You are an expert frontend architect. Given the components folder structure and docs, propose an improved organization (groupings like UI, data-display, feedback, navigation), and suggest safe renames/moves. 
+
+Output a concise YAML with keys:
+- moves: list of {from, to} for safe component relocations
+- notes: detailed, actionable insights about the organization, including:
+  * Architectural recommendations
+  * Naming convention suggestions
+  * Potential improvements for maintainability
+  * Grouping rationale
+  * Future considerations
+- toc_sections: map of section -> sorted list of component folder names
+
+Only include safe, mechanical moves (no content edits). Provide comprehensive notes that explain your organizational decisions and provide actionable insights for developers.
+
+Current structure:
+${structure.map((e) => `- ${e.type}: ${e.path}`).join('\n')}
+
+Component docs excerpts:
+${Object.entries(docs).map(([k, v]) => `### ${k}\n${v}`).join('\n\n')}`;
 }
 
 async function callGemini(prompt) {
@@ -241,9 +259,7 @@ async function main() {
     if (githubOutput) {
       const fs = await import('fs');
       const output = [
-        `changes_made=${appliedMoves.length > 0 ? 'true' : 'false'}`,
-        `summary_path=${summaryPath}`,
-        `markdown_path=${markdownPath}`
+        `changes_made=${appliedMoves.length > 0 ? 'true' : 'false'}`
       ].join('\n');
       fs.writeFileSync(githubOutput, output, 'utf8');
     }

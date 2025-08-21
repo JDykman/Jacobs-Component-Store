@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changes_made: ${{ steps.organize.outputs.changes_made }}
-      summary_path: ${{ steps.organize.outputs.summary_path }}
-      markdown_path: ${{ steps.organize.outputs.markdown_path }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,15 +40,6 @@ jobs:
 
       - name: Update TOC (post)
         run: npm run update:toc
-
-      - name: Upload change summary artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-changes-summary
-          path: |
-            ai-changes-summary.json
-            AI_CHANGES_SUMMARY.md
-          retention-days: 30
 
       - name: Generate commit message
         id: commit-msg
@@ -78,23 +67,94 @@ jobs:
           fi
 
       - name: Comment on commit
-        if: steps.organize.outputs.changes_made == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            let summaryContent = '';
+            
+            // Read the detailed summary files
+            let summaryData = {};
+            let markdownContent = '';
+            
             try {
-              summaryContent = fs.readFileSync('AI_CHANGES_SUMMARY.md', 'utf8');
+              // Read JSON summary for structured data
+              const jsonContent = fs.readFileSync('ai-changes-summary.json', 'utf8');
+              summaryData = JSON.parse(jsonContent);
+              
+              // Read markdown for formatted display
+              markdownContent = fs.readFileSync('AI_CHANGES_SUMMARY.md', 'utf8');
             } catch (e) {
-              summaryContent = 'Change summary could not be read.';
+              console.log('Could not read summary files:', e.message);
+              // Provide fallback information
+              summaryData = {
+                timestamp: new Date().toISOString(),
+                changes: {
+                  moves: [],
+                  toc_sections: {},
+                  notes: ['Summary files could not be read, but the workflow completed successfully.']
+                }
+              };
             }
             
-            const comment = `🤖 **AI Component Organization Complete**
+            // Build a comprehensive comment with all information
+            let comment = `🤖 **AI Component Organization Complete**\n\n`;
             
-            ${summaryContent}
+            // Add timestamp
+            if (summaryData.timestamp) {
+              const timestamp = new Date(summaryData.timestamp).toLocaleString();
+              comment += `⏰ **Generated:** ${timestamp}\n\n`;
+            }
             
-            📋 **Artifacts**: Download the \`ai-changes-summary\` artifact to see detailed changes.`;
+            // Check if any changes were made
+            const hasChanges = summaryData.changes && (
+              (summaryData.changes.moves && summaryData.changes.moves.length > 0) ||
+              (summaryData.changes.toc_sections && Object.keys(summaryData.changes.toc_sections).length > 0)
+            );
+            
+            if (!hasChanges) {
+              comment += `ℹ️ **No structural changes were made**\n\n`;
+            }
+            
+            // Add component moves if any
+            if (summaryData.changes && summaryData.changes.moves && summaryData.changes.moves.length > 0) {
+              comment += `📁 **Component Moves:**\n`;
+              comment += `\n`;
+              for (const move of summaryData.changes.moves) {
+                const status = move.status === 'success' ? '✅' : '❌';
+                comment += `${status} \`${move.from}\` → \`${move.to}\`\n`;
+                if (move.error) {
+                  comment += `   - Error: ${move.error}\n`;
+                }
+              }
+              comment += '\n';
+            }
+            
+            // Add new TOC structure if any
+            if (summaryData.changes && summaryData.changes.toc_sections && Object.keys(summaryData.changes.toc_sections).length > 0) {
+              comment += `📋 **New Table of Contents Structure:**\n`;
+              comment += `\n`;
+              for (const [section, components] of Object.entries(summaryData.changes.toc_sections)) {
+                comment += `**${section}**\n`;
+                for (const component of components) {
+                  comment += `  • ${component}\n`;
+                }
+                comment += `\n`;
+              }
+            }
+            
+            // Add AI notes if any
+            if (summaryData.changes && summaryData.changes.notes && summaryData.changes.notes.length > 0) {
+              comment += `💡 **AI Insights & Recommendations:**\n`;
+              comment += `\n`;
+              for (const note of summaryData.changes.notes) {
+                comment += `• ${note}\n`;
+              }
+              comment += `\n`;
+            }
+            
+            // Add footer
+            comment += `---\n\n`;
+            comment += `📖 **Full Summary**: All changes and notes are displayed above. No artifacts to download!`;
             
             github.rest.repos.createCommitComment({
               owner: context.repo.owner,
@@ -102,3 +162,8 @@ jobs:
               commit_sha: context.sha,
               body: comment
             });
+
+      - name: Cleanup temporary files
+        if: always()
+        run: |
+          rm -f ai-changes-summary.json AI_CHANGES_SUMMARY.md
