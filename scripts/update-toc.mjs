@@ -10,10 +10,18 @@ const componentsReadme = path.join(componentsDir, 'README.md');
 
 async function getComponentFolders() {
   const entries = await fs.readdir(componentsDir, { withFileTypes: true });
-  return entries
-    .filter((e) => e.isDirectory())
-    .map((e) => e.name)
-    .sort((a, b) => a.localeCompare(b));
+  const dirNames = entries.filter((e) => e.isDirectory()).map((e) => e.name);
+  const filtered = await Promise.all(
+    dirNames.map(async (name) => {
+      try {
+        await fs.access(path.join(componentsDir, name, 'README.md'));
+        return name;
+      } catch {
+        return null;
+      }
+    })
+  );
+  return filtered.filter(Boolean).sort((a, b) => a.localeCompare(b));
 }
 
 function generateReadme(folders) {
