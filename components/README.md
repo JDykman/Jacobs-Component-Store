@@ -8,21 +8,21 @@ This directory contains reusable components organized by folders. Use the links 
   - [Checkbox](./UI/Checkbox/README.md)
   - [Input](./UI/Input/README.md)
   - [Radio](./UI/Radio/README.md)
+  - [Tooltip](./UI/Tooltip/README.md)
 
 - **Data Display Components**
   - [Dropdown](./data-display/Dropdown/README.md)
   - [Pagination](./data-display/Pagination/README.md)
-  - [Tabs](./data-display/Tabs/README.md)
 
 - **Feedback Components**
   - [Button](./feedback/Button/README.md)
   - [Modal](./feedback/Modal/README.md)
   - [ProgressIndicator](./feedback/ProgressIndicator/README.md)
-  - [Tooltip](./feedback/Tooltip/README.md)
 
 - **Navigation Components**
   - [Navbar](./navigation/Navbar/README.md)
   - [Sidebar](./navigation/Sidebar/README.md)
+  - [Tabs](./navigation/Tabs/README.md)
 
 ---
 
@@ -40,6 +40,9 @@ Components that provide feedback to the user, including buttons, modals, progres
 ### Navigation Components
 Components that aid in navigation within the application, such as navigation bars and sidebars.
 
+### Layout Components
+Components for structuring and organizing page layout, such as containers, grids, and sections.
+
 ---
 
 To update this table of contents automatically, run:
@@ -48,7 +51,7 @@ To update this table of contents automatically, run:
 npm run update:toc
 ```
 
-To AI-organize components and update the table of contents (requires `GOOGLE_API_KEY`):
+To AI-organize components and update the table of contents:
 
 ```bash
 npm run organize:components
