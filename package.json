@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
-    "openai": "^4.52.0"
+    "@google/generative-ai": "^0.21.0"
   }
 }

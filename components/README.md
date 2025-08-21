@@ -15,7 +15,7 @@ To update this table of contents automatically, run:
 npm run update:toc
 ```
 
-To AI-organize components and update the table of contents (requires `OPENAI_API_KEY`):
+To AI-organize components and update the table of contents (requires `GOOGLE_API_KEY`):
 
 ```bash
 npm run organize:components
