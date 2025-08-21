@@ -5,11 +5,7 @@ This directory contains reusable components organized by folders. Use the links 
 ## Table of Contents
 
 - UI Components
-  - [Button](./Button/README.md)
-  - [Card](./Card/README.md)
-  - [Input](./Input/README.md)
-  - [Modal](./Modal/README.md)
-  - [Tabs](./Tabs/README.md)
+
 
 ---
 
@@ -24,4 +20,3 @@ To AI-organize components and update the table of contents (requires `OPENAI_API
 ```bash
 npm run organize:components
 ```
-
